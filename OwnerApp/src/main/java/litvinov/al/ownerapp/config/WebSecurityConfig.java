@@ -44,12 +44,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                             PrincipalOwner principalOwner = (PrincipalOwner) authentication.getPrincipal();
                             principalOwnerService
                                     .loadPrincipalUserIntoDb(principalOwner);
-                            response.sendRedirect("/main");
+                            response.sendRedirect("/restaurant");
                         }
                     })
                 .and()
                     .logout().
-                        logoutSuccessUrl("https://google.com").permitAll();
+                        logoutSuccessUrl("https://google.com").permitAll()
+                .and()
+                    .csrf().disable();
     }
 
 

@@ -23,9 +23,11 @@ public class MainController {
     private RestaurantRepo restaurantRepo;
 
     @GetMapping
-    public String getRestaurants(@AuthenticationPrincipal PrincipalOwner user){
+    public Iterable<Restaurant> getRestaurants(
+            @AuthenticationPrincipal PrincipalOwner owner){
 
-        return "hi";
+        return restaurantRepo
+                .findRestaurantsByOwner(owner.getEmail());
     }
 
 

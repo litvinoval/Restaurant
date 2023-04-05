@@ -6,6 +6,7 @@ import litvinov.al.ownerapp.pojo.PrincipalOwner;
 import litvinov.al.ownerapp.repo.OwnerRepo;
 import litvinov.al.ownerapp.repo.RestaurantRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/restaurant")
+@RequestMapping(value = "/restaurant")
 public class RestaurantController {
     @Autowired
     private RestaurantRepo restaurantRepo;
@@ -29,14 +30,16 @@ public class RestaurantController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping(value = "/{name}")
+    @GetMapping(value = "/{name}", produces = "application/json")
     public Restaurant getRestaurantByName(@AuthenticationPrincipal PrincipalOwner owner,
                                           @PathVariable String name){
         return restaurantRepo
                 .findRestaurantByOwner(owner.getEmail(), name);
     }
 
-    @PostMapping("/create")
+
+    @PostMapping(value = "/create", consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
     public Restaurant createRestaurant(@AuthenticationPrincipal PrincipalOwner owner,
                                        @RequestBody Restaurant restaurant){
         restaurant.setOwner(

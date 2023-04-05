@@ -16,6 +16,6 @@ public interface RestaurantRepo extends CrudRepository<Restaurant, String> {
 
     @Query(value = "select '*' from Restaurant r join Owner o on" +
             " o.email=:email where r.name=:name")
-    Restaurant findRestaurantByOwner(@Param(value = "email") String email,
-                                     @Param(value = "name") String name);
+    Restaurant findRestaurantByOwner(@Param(value = "email") String userEmail,
+                                     @Param(value = "name") String restaurantName);
 }

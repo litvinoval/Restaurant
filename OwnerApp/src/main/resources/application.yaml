@@ -18,3 +18,7 @@ spring:
             scope:
               - email
               - profile
+
+  data:
+    rest:
+      detection-strategy: annotated
